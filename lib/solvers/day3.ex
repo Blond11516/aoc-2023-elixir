@@ -22,7 +22,31 @@ defmodule Aoc2023.Solvers.Day3 do
 
   @impl Aoc2023.Solver
   def solve_part_2(input) do
-    input
+    numbers = parse_numbers(input)
+    symbols = parse_symbols(input)
+
+    for number <- numbers,
+        neighboring_gear <- find_neighboring_gears(number, symbols) do
+      {number, neighboring_gear}
+    end
+    |> Enum.reduce(%{}, fn {number, gear_position}, acc ->
+      Map.update(acc, gear_position, [number], fn neighbors -> [number | neighbors] end)
+    end)
+    |> Enum.map(fn
+      {_, [number1, number2]} -> number1.value * number2.value
+      _ -> 0
+    end)
+    |> Enum.sum()
+  end
+
+  @spec find_neighboring_gears(Number.t(), symbols()) :: list(Position.t())
+  def find_neighboring_gears(number, symbols) do
+    for row <- (number.position.row - 1)..(number.position.row + 1),
+        column <- (number.position.column - 1)..(number.position.column + number.length),
+        position = Position.new(row, column),
+        symbols[position] == "*" do
+      position
+    end
   end
 
   @spec has_neighboring_symbol?(Number.t(), symbols()) :: boolean()
