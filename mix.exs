@@ -21,7 +21,8 @@ defmodule AoC2023.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:exprof, "~> 0.2.4", only: [:dev, :test]}
+      {:exprof, "~> 0.2.4", only: [:dev, :test]},
+      {:gradient, github: "esl/gradient", only: [:dev], runtime: false}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]

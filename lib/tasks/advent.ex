@@ -16,7 +16,7 @@ defmodule Mix.Tasks.Advent do
 
   import ExProf.Macro
 
-  @spec run([any]) :: :ok
+  @impl Mix.Task
   def run(argv) do
     {switches, args, _} = OptionParser.parse(argv, strict: [test: :string, profile: :boolean])
 
